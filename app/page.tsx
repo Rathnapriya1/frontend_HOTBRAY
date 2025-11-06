@@ -22,7 +22,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://hotbray-backend.onrender.com/products");
+        const res = await fetch("https://hotbray-2.onrender.com/products");
         const data = await res.json();
         setProducts(data.slice(0, 4)); // show only top 4 featured products
       } catch (err) {
