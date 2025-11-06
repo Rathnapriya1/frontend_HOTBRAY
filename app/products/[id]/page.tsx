@@ -28,7 +28,7 @@ export default function ProductDetailPage() {
 
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`https://hotbray-backend.onrender.com/products/${id}`);
+        const res = await fetch(`https://hotbray-2.onrender.com/products/${id}`);
         if (!res.ok) throw new Error("Product not found");
         const data = await res.json();
         setProduct(data);
