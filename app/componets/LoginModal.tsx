@@ -16,7 +16,7 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
         </button>
 
         {/* Heading */}
-        <h2 className="text-2xl font-bold text-center mb-1">Sign in to HotBray</h2>
+        <h2 className="text-2xl font-bold text-center mb-1">Sign in to DGSTECH </h2>
         <p className="text-gray-500 text-center mb-6">
           Welcome back! Please sign in to continue
         </p>
