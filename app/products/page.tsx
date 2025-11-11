@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
+import { API_BASE_URL } from "@/utils/api";
+import ProductDetailModal from "./../componets/ProductDetailModal";
 
 interface Product {
   id: number;
@@ -25,12 +27,15 @@ export default function ProductsPage() {
   const [category, setCategory] = useState("");
   const [priceSort, setPriceSort] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // ✅ Fetch products from backend
+  //Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://hotbray-2.onrender.com/products");
+        const res = await fetch(`${API_BASE_URL}/products`, {
+          cache: "no-store",
+        });
         const data = await res.json();
         setProducts(data);
         setFilteredProducts(data);
@@ -43,7 +48,7 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
-  // ✅ Apply all filters
+  //Apply all filters
   useEffect(() => {
     let filtered = [...products];
 
@@ -72,7 +77,7 @@ export default function ProductsPage() {
     setFilteredProducts(filtered);
   }, [searchTerm, category, priceSort, products]);
 
-  // ✅ Clear all filters
+  // Clear all filters
   const clearFilters = () => {
     setSearchTerm("");
     setCategory("");
@@ -80,20 +85,21 @@ export default function ProductsPage() {
     setFilteredProducts(products);
   };
 
-  // ✅ Handle Add to Cart
+  //Handle Add to Cart
   const handleAddToCart = (product: Product) => {
     addToCart(product);
   };
 
   return (
     <main className="min-h-screen bg-gray-50 py-10 px-6 md:px-16">
-            {/* ✅ Banner Section */}
+      {/* Banner Section */}
       <section className="relative w-full h-[300px] md:h-[400px] mb-10">
         <Image
           src="/product_banner.png"
           alt="Products Banner"
-          fill
-          className=" rounded-lg"
+          width={1100}
+          height={200}
+          className="rounded-lg object-cover"
         />
       </section>
 
@@ -156,7 +162,7 @@ export default function ProductsPage() {
                 onClick={() => router.push(`/products/${product.id}`)}
               >
                 <Image
-                  src={product.image}
+                  src={product.image || "/placeholder.png"}
                   alt={product.name}
                   width={200}
                   height={200}
@@ -181,7 +187,7 @@ export default function ProductsPage() {
                   Add to Cart
                 </button>
                 <button
-                  onClick={() => router.push(`/products/${product.id}`)}
+                  onClick={() => setSelectedProduct(product)}
                   className="flex-1 border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-lg transition ShopNow_btn"
                 >
                   View Product
@@ -190,6 +196,12 @@ export default function ProductsPage() {
             </div>
           ))}
         </div>
+      )}
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
       )}
     </main>
   );
