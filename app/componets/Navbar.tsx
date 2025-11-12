@@ -1,11 +1,17 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
 import LoginModal from "./LoginModal";
+import { useUser, useClerk, UserButton } from "@clerk/nextjs";
+import { PackageIcon } from "lucide-react";
 
 export default function Navbar() {
   const { cartItems, toggleCart } = useCart();
   const [showLogin, setShowLogin] = useState(false);
+  const { user } = useUser();
+  const { openSignIn } = useClerk();
+  const router = useRouter();
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -55,17 +61,29 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* Login button */}
-          <button
-            onClick={() => setShowLogin(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Login
-          </button>
+          {/* Login / User Button */}
+          {!user ? (
+            <button
+              onClick={openSignIn}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+            >
+              Login
+            </button>
+          ) : (
+            <UserButton afterSignOutUrl="/">
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  labelIcon={<PackageIcon size={16} />}
+                  label="My Orders"
+                  onClick={() => router.push("/orders")}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          )}
         </div>
       </nav>
 
-      {/* Popup Modal */}
+      {/* Popup Modal (optional if you're still using it elsewhere) */}
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
     </>
   );
