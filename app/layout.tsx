@@ -18,8 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body suppressHydrationWarning={true} className="bg-gray-50 text-gray-900">
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-gray-50 text-gray-900" suppressHydrationWarning>
         <CartProvider>
           <Navbar />
           <CartSidebar />

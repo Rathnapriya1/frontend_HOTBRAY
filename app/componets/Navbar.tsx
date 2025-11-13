@@ -31,7 +31,7 @@ export default function Navbar() {
           <a href="./products" className="text-gray-700 hover:text-blue-600">
             Products
           </a>
-          <a href="#" className="text-gray-700 hover:text-blue-600">
+          <a href="./contact" className="text-gray-700 hover:text-blue-600">
             Contact
           </a>
         </div>
@@ -64,7 +64,7 @@ export default function Navbar() {
           {/* Login / User Button */}
           {!user ? (
             <button
-              onClick={openSignIn}
+              onClick={() => openSignIn()}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
             >
               Login
