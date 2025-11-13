@@ -43,7 +43,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-gray-50 pb-16">
       {/* Banner Section */}
-      <section className="relative w-full h-[600px] md:h-[500px]">
+      <section className="relative w-full h-[350px] md:h-[450px]">
         <Image
           src="https://www.shutterstock.com/image-illustration/various-car-parts-accessories-isolated-600nw-673268602.jpg"
           alt="Contact us vehicle banner"
