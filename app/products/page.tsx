@@ -85,10 +85,14 @@ export default function ProductsPage() {
     setFilteredProducts(products);
   };
 
-  //Handle Add to Cart
-  const handleAddToCart = (product: Product) => {
-    addToCart(product);
-  };
+//Handle Add to Cart
+const handleAddToCart = (product: Product) => {
+  addToCart({
+    ...product,
+    quantity: 1, // required by CartItem
+  });
+};
+
 
   return (
     <main className="min-h-screen bg-gray-50 py-10 px-6 md:px-16">

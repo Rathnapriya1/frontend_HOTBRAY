@@ -1,6 +1,7 @@
-'use client';
+type Order = Record<string, unknown>;
+
 type OrdersAreaChartProps = {
-    allOrders: any[];
+    allOrders: Order[];
 };
 
 export default function OrdersAreaChart({ allOrders }: OrdersAreaChartProps) {
