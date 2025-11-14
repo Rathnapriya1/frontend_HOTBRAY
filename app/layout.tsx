@@ -1,9 +1,9 @@
 // app/layout.tsx
 import "./globals.css";
-import Navbar from "./componets/Navbar";
+import Navbar from "./components/Navbar";
 import { CartProvider } from "./context/CartContext";
-import CartSidebar from "./componets/CartSidebar";
-import Footer from "./componets/Footer";
+import CartSidebar from "./components/CartSidebar";
+import Footer from "./components/Footer";
 import {ClerkProvider} from "@clerk/nextjs";
 
 export const metadata = {

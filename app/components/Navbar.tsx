@@ -34,6 +34,9 @@ export default function Navbar() {
           <a href="./contact" className="text-gray-700 hover:text-blue-600">
             Contact
           </a>
+          <a href="./admin" className="text-gray-700 hover:text-blue-600">
+            Admin
+          </a>
         </div>
 
         {/* Right side buttons */}

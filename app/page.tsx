@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Carousel from "./componets/Carousel";
+import Carousel from "./components/Carousel";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/utils/api";

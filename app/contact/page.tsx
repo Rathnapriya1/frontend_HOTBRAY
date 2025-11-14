@@ -30,13 +30,13 @@ export default function ContactPage() {
       const data = await res.json();
  
       if (res.ok) {
-        setStatus("✅ Message sent successfully!");
+        setStatus("Message sent successfully!");
         setForm({ name: "", email: "", message: "" });
       } else {
-        setStatus("❌Something went wrong");
+        setStatus("Something went wrong");
       }
     } catch {
-      setStatus("❌ Network error");
+      setStatus("Network error");
     }
   };
  
