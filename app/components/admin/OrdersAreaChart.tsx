@@ -1,3 +1,4 @@
+'use client';
 type OrdersAreaChartProps = {
     allOrders: any[];
 };
