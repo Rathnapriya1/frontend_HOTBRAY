@@ -62,6 +62,7 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
             Sign up
           </a>
         </p>
+        
       </div>
     </div>
   );
