@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import LoginModal from "./LoginModal";
 import { FaClock, FaHeadset, FaPhoneAlt, FaTruck } from "react-icons/fa";
 import dynamic from "next/dynamic";
+import QuickPartModal from "./QuickPartModal";
 
 const ClerkSafe = dynamic(() => import("../NavbarClerk"), { ssr: false });
 
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isQuickOpen, setIsQuickOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -100,6 +102,13 @@ export default function Navbar() {
               </span>
             )}
           </button>
+          {/* Quick Part Add button */}
+          <button
+            onClick={() => setIsQuickOpen(true)}
+            className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition fast-order-btn"
+          >
+            Fast Order
+          </button>
 
           {/* Clerk */}
           {isClient && <ClerkSafe />}
@@ -130,6 +139,8 @@ export default function Navbar() {
       </nav>
 
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+          {/* Render QuickPartModal when requested */}
+      {isQuickOpen && <QuickPartModal onClose={() => setIsQuickOpen(false)} />}
     </div>
   );
 }
