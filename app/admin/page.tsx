@@ -1,8 +1,12 @@
 'use client'
+
 import { CircleDollarSignIcon, ShoppingBasketIcon, StoreIcon, TagsIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import Loading from "@/app/components/admin/Loading";
 import OrdersAreaChart from "@/app/components/admin/OrdersAreaChart";
+
+//  Added imports (Clerk auth)
+import { useUser, RedirectToSignIn } from "@clerk/nextjs";
 
 const dummyAdminDashboardData = {
   products: 1,
@@ -14,6 +18,29 @@ const dummyAdminDashboardData = {
 
 export default function AdminDashboard() {
 
+    //  Clerk user
+    const { user, isLoaded } = useUser();
+
+    // Clerk still loading
+    if (!isLoaded) return <Loading />;
+
+    // Not logged in → Show Clerk login popup
+    if (!user) return <RedirectToSignIn />;
+
+    //  Allowed admin email
+    const allowedAdmin = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    const email = user.primaryEmailAddress?.emailAddress || "";
+
+    // Not admin user → Block access
+    if (email !== allowedAdmin) {
+        return (
+            <div className="p-10 text-center text-red-600 text-xl">
+                You are not authorized to view this page.
+            </div>
+        );
+    }
+
+    //  Your existing code starts here
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$'
 
     const [loading, setLoading] = useState(true)
