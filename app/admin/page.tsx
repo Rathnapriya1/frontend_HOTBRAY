@@ -20,7 +20,6 @@ export default function AdminDashboard() {
 
     //  Clerk user
     const { user, isLoaded } = useUser();
-
     // Clerk still loading
     if (!isLoaded) return <Loading />;
 
