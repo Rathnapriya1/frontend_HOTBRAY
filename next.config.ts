@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["picsum.photos", "www.shutterstock.com"],
+    domains: ["picsum.photos", "di-uploads-pod7.dealerinspire.com"],
   },
   remotePatterns: [
   {

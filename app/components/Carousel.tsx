@@ -5,17 +5,17 @@ import Image from "next/image";
 const slides = [
   {
     id: 1,
-    image: "/carousal_img.webp",
+    image: "/c4.png",
     caption: "Big Sale — Up to 20% Off!",
   },
   {
     id: 2,
-    image: "/carousal_img.webp",
+    image: "/c4.png",
     caption: "New Arrivals for You!",
   },
   {
     id: 3,
-    image: "/carousal_img.webp",
+    image: "/c4.png",
     caption: "Discover Our Best Sellers",
   },
 ];

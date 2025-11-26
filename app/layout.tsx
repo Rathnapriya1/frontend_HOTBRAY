@@ -2,7 +2,6 @@
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { CartProvider } from "./context/CartContext";
-import CartSidebar from "./components/CartSidebar";
 import Footer from "./components/Footer";
 import { Providers } from "./providers";
 
@@ -25,7 +24,6 @@ export default function RootLayout({
         <Providers>
           <CartProvider>
             <Navbar />
-            <CartSidebar />
             <main>{children}</main>
           </CartProvider>
           <Footer />
