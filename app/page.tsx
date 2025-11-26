@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Carousel from "./components/Carousel";
+import CategoriesMarquee from "./components/CategoriesMarquee";   // ✅ ADD THIS
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/utils/api";
@@ -39,8 +40,14 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      
       {/* Carousel Section */}
       <Carousel />
+
+      {/* ✅ Categories Marquee Section (ADDED) */}
+      <div className="mt-10">
+        <CategoriesMarquee />
+      </div>
 
       {/* Featured Products Section */}
       <section className="py-16 px-6 md:px-16">
@@ -66,10 +73,13 @@ export default function Home() {
                     className="object-cover rounded-lg"
                   />
                 </div>
+
                 <h3 className="text-lg font-medium text-gray-900">
                   {product.name}
                 </h3>
+
                 <p className="text-gray-600">${product.price}</p>
+
                 <button
                   onClick={() => router.push(`/products`)}
                   className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ShopNow_btn"

@@ -177,3 +177,13 @@ select{
 .Phone_div:hover, .Email_div:hover, .Location_div:hover{
   background-color: #155dfc;
 }
+
+/* Marquee scroll animation */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
