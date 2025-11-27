@@ -1,10 +1,13 @@
 "use client";
 import Image from "next/image";
 import Carousel from "./components/Carousel";
-import CategoriesMarquee from "./components/CategoriesMarquee";   // ✅ ADD THIS
+import CategoriesMarquee from "./components/CategoriesMarquee";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/utils/api";
+import Rating from "@/app/components/Rating";
+import RatingModal from "@/app/components/RatingModal";
+import OurSpecs from "@/app/components/OurSpec"; 
 
 interface Product {
   id: number;
@@ -20,6 +23,9 @@ export default function Home() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  //  Added state for modal
+  const [ratingModal, setRatingModal] = useState<boolean | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,11 +46,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      
       {/* Carousel Section */}
       <Carousel />
 
-      {/* ✅ Categories Marquee Section (ADDED) */}
+      {/* Categories Marquee */}
       <div className="mt-10">
         <CategoriesMarquee />
       </div>
@@ -80,6 +85,19 @@ export default function Home() {
 
                 <p className="text-gray-600">${product.price}</p>
 
+                {/*  Added rating display */}
+                <div className="mt-2">
+                  <Rating value={4} />
+                </div>
+
+                {/*  Button to open modal */}
+               {/* <button
+                  onClick={() => setRatingModal(true)}
+                  className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  Rate This Product
+                </button> */}
+
                 <button
                   onClick={() => router.push(`/products`)}
                   className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ShopNow_btn"
@@ -91,6 +109,14 @@ export default function Home() {
           </div>
         )}
       </section>
+     <OurSpecs />
+      {/* ⭐ Rating Modal Rendering */}
+      {ratingModal && (
+        <RatingModal
+          ratingModal={ratingModal}
+          setRatingModal={setRatingModal}
+        />
+      )}
     </main>
-  );
+  ); 
 }

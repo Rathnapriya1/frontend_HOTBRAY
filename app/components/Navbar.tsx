@@ -6,6 +6,8 @@ import LoginModal from "./LoginModal";
 import { FaClock, FaTruck } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import Rating from '@/app/components/Rating';
+import RatingModal from '@/app/components/RatingModal';
 
 const ClerkSafe = dynamic(() => import("../NavbarClerk"), { ssr: false });
 
@@ -15,6 +17,7 @@ export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const [ratingModal, setRatingModal] = useState<boolean | null>(null);
 
   useEffect(() => {
     setIsClient(true);

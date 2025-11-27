@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
 import { API_BASE_URL } from "@/utils/api";
 import ProductDetailModal from "../components/ProductDetailModal";
+import Rating from '@/app/components/Rating';
+import RatingModal from '@/app/components/RatingModal';
 
 interface Product {
   id: number;
@@ -20,7 +22,6 @@ interface Product {
 export default function ProductsPage() {
   const router = useRouter();
   const { addToCart } = useCart();
-
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,6 +29,7 @@ export default function ProductsPage() {
   const [priceSort, setPriceSort] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [ratingModal, setRatingModal] = useState<boolean | null>(null)
 
   //Fetch products from backend
   useEffect(() => {
