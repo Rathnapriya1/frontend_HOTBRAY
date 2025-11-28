@@ -8,6 +8,8 @@ import { API_BASE_URL } from "@/utils/api";
 import Rating from "@/app/components/Rating";
 import RatingModal from "@/app/components/RatingModal";
 import OurSpecs from "@/app/components/OurSpec"; 
+import ProductCard from "@/app/products/ProductCard";
+
 
 interface Product {
   id: number;

@@ -3,34 +3,40 @@
 import Marquee from "react-fast-marquee";
 
 const productCategories = [
-  "BRAKE PAD",
-  "BATTERY",
-  "BULB",
-  "WIPER BLADES",
-  "ENGINE OIL",
+  "Brake Pad",
+  "Battery",
+  "Bulb",
+  "Wiper Blades",
+  "Engine Oil",
 ];
 
 export default function CategoriesMarquee() {
   return (
-    <div className="w-full bg-white">
+    <div
+      className="w-full overflow-hidden relative flex items-center"
+      style={{
+        height: "35px",
+        background: "#0c4395",
+        textAlign: "center",
+      }}
+    >
       <Marquee
         gradient={false}
         speed={40}
         pauseOnHover={true}
-        className="flex items-center"
+        autoFill={true}
+        className="relative z-10"
       >
         {productCategories.map((item, index) => (
           <span
             key={index}
-            className="mx-7 text-base font-semibold text-black uppercase"
+            className="inline-flex items-center"
             style={{
-              padding: "0 10px", // More even spacing
-              color: "#222",      // True black color
-              background: 'linear-gradient(90deg, #8ac0f3ff 0%, #eff5f7ff 100%)', // No background color
-              border: "none",     // No border
-              boxShadow: "none",  // No shadow
-              borderRadius: "0",  // No rounded corners
-              letterSpacing: "0.03em", // Slight tracking
+              color: "#ffffff",         // guaranteed white
+              padding: "0 22px",        // equal gap for each item
+              fontSize: "14px",         // matches text-base roughly
+              fontWeight: 400,          // normal weight
+              letterSpacing: "0.03em",
             }}
           >
             {item}

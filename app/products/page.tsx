@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 import { API_BASE_URL } from "@/utils/api";
 import ProductDetailModal from "../components/ProductDetailModal";
 import Rating from '@/app/components/Rating';
@@ -22,6 +23,7 @@ interface Product {
 export default function ProductsPage() {
   const router = useRouter();
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,9 +31,8 @@ export default function ProductsPage() {
   const [priceSort, setPriceSort] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [ratingModal, setRatingModal] = useState<boolean | null>(null)
+  const [ratingModal, setRatingModal] = useState<boolean | null>(null);
 
-  //Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -50,11 +51,9 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
-  //Apply all filters
   useEffect(() => {
     let filtered = [...products];
 
-    // Search filter (name or part number)
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
@@ -64,12 +63,10 @@ export default function ProductsPage() {
       );
     }
 
-    // Category filter
     if (category) {
       filtered = filtered.filter((p) => p.category === category);
     }
 
-    // Price sorting
     if (priceSort === "low-high") {
       filtered.sort((a, b) => a.price - b.price);
     } else if (priceSort === "high-low") {
@@ -79,7 +76,6 @@ export default function ProductsPage() {
     setFilteredProducts(filtered);
   }, [searchTerm, category, priceSort, products]);
 
-  // Clear all filters
   const clearFilters = () => {
     setSearchTerm("");
     setCategory("");
@@ -87,18 +83,15 @@ export default function ProductsPage() {
     setFilteredProducts(products);
   };
 
-//Handle Add to Cart
-const handleAddToCart = (product: Product) => {
-  addToCart({
-    ...product,
-    quantity: 1, // required by CartItem
-  });
-};
-
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      ...product,
+      quantity: 1,
+    });
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 py-10 px-6 md:px-16">
-      {/* Banner Section */}
       <section className="relative w-full h-[300px] md:h-[400px] mb-10">
         <Image
           src="/product_banner.png"
@@ -109,9 +102,7 @@ const handleAddToCart = (product: Product) => {
         />
       </section>
 
-      {/* Filters Section */}
       <div className="flex flex-col md:flex-row items-center gap-4 mb-10 justify-between">
-        {/* Search */}
         <input
           type="text"
           placeholder="Search by name or part number..."
@@ -119,8 +110,6 @@ const handleAddToCart = (product: Product) => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border border-gray-300 rounded-lg px-4 py-2 w-full md:w-1/3"
         />
-
-        {/* Category Filter */}
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -130,8 +119,6 @@ const handleAddToCart = (product: Product) => {
           <option value="Jaguar">Jaguar</option>
           <option value="Range Rover">Range Rover</option>
         </select>
-
-        {/* Price Sort */}
         <select
           value={priceSort}
           onChange={(e) => setPriceSort(e.target.value)}
@@ -141,8 +128,6 @@ const handleAddToCart = (product: Product) => {
           <option value="low-high">Price: Low → High</option>
           <option value="high-low">Price: High → Low</option>
         </select>
-
-        {/* Clear Filters */}
         <button
           onClick={clearFilters}
           className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg"
@@ -151,7 +136,6 @@ const handleAddToCart = (product: Product) => {
         </button>
       </div>
 
-      {/* Products Grid */}
       {loading ? (
         <p className="text-center text-gray-600">Loading products...</p>
       ) : filteredProducts.length === 0 ? (
@@ -161,8 +145,30 @@ const handleAddToCart = (product: Product) => {
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col"
+              className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col relative"
             >
+              {/* Heart Icon */}
+              <button
+                onClick={() =>
+                  isInWishlist(product.id)
+                    ? removeFromWishlist(product.id)
+                    : addToWishlist(product.id)
+                }
+                className="absolute top-3 right-3 z-10"
+              >
+                <Image
+                  src={
+                    isInWishlist(product.id)
+                      ? "/heartfilledicon.jpg"
+                      : "/hearticon.jpg"
+                  }
+                  alt="Wishlist"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
+              </button>
+
               <div
                 className="relative w-full h-56 mb-4 cursor-pointer"
                 onClick={() => router.push(`/products/${product.id}`)}
@@ -176,13 +182,9 @@ const handleAddToCart = (product: Product) => {
                 />
               </div>
 
-              <h3 className="text-lg font-medium text-gray-900">
-                {product.name}
-              </h3>
+              <h3 className="text-lg font-medium text-gray-900">{product.name}</h3>
               <p className="text-gray-600">${product.price}</p>
-              <p className="text-sm text-gray-500">
-                Part No: {product.part_number}
-              </p>
+              <p className="text-sm text-gray-500">Part No: {product.part_number}</p>
               <p className="text-sm text-gray-500 mb-4">{product.category}</p>
 
               <div className="mt-auto flex gap-2">
