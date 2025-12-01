@@ -10,6 +10,7 @@ import ProductDetailModal from "../components/ProductDetailModal";
 import Rating from '@/app/components/Rating';
 import RatingModal from '@/app/components/RatingModal';
 
+
 interface Product {
   id: number;
   name: string;

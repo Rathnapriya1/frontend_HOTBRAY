@@ -1,7 +1,7 @@
 export const productCategories = [
-  "Brake Pad",
-  "Battery",
-  "Bulb",
+  "Brake Pads",
+  "Batteries",
+  "Bulbs",
   "Wiper Blades",
-  "Engine Oil"
+  "Engine Oils",
 ];

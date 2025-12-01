@@ -52,7 +52,7 @@ export default function Home() {
       <Carousel />
 
       {/* Categories Marquee */}
-      <div className="mt-10">
+      <div className="mt-3">
         <CategoriesMarquee />
       </div>
 
