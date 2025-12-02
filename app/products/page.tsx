@@ -9,7 +9,8 @@ import { API_BASE_URL } from "@/utils/api";
 import ProductDetailModal from "../components/ProductDetailModal";
 import Rating from '@/app/components/Rating';
 import RatingModal from '@/app/components/RatingModal';
-
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 
 interface Product {
   id: number;
@@ -148,27 +149,21 @@ export default function ProductsPage() {
               key={product.id}
               className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col relative"
             >
-              {/* Heart Icon */}
-              <button
-                onClick={() =>
-                  isInWishlist(product.id)
-                    ? removeFromWishlist(product.id)
-                    : addToWishlist(product.id)
-                }
-                className="absolute top-3 right-3 z-10"
-              >
-                <Image
-                  src={
-                    isInWishlist(product.id)
-                      ? "/heartfilledicon.jpg"
-                      : "/hearticon.jpg"
-                  }
-                  alt="Wishlist"
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
-                />
-              </button>
+{/* Heart Icon */}
+<button
+  onClick={() =>
+    isInWishlist(product.id)
+      ? removeFromWishlist(product.id)
+      : addToWishlist(product.id)
+  }
+  className="absolute top-3 right-3 z-10 text-red-500 text-[26px] cursor-pointer"
+>
+  {isInWishlist(product.id) ? (
+    <IoMdHeart className="text-red-600" />
+  ) : (
+    <IoMdHeartEmpty className="text-gray-600 hover:text-red-600 transition" />
+  )}
+</button>
 
               <div
                 className="relative w-full h-56 mb-4 cursor-pointer"

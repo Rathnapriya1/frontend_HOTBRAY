@@ -7,10 +7,12 @@ import LoginModal from "./LoginModal";
 import { FaClock, FaTruck } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import Rating from '@/app/components/Rating';
-import RatingModal from '@/app/components/RatingModal';
+{/*import Rating from '@/app/components/Rating';
+import RatingModal from '@/app/components/RatingModal'; */}
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
+import { IoMdHeartEmpty } from "react-icons/io";
+
 
 const ClerkSafe = dynamic(() => import("../NavbarClerk"), { ssr: false });
 
@@ -84,7 +86,7 @@ export default function Navbar() {
             aria-label="Open wishlist"
           >
             <div className="relative">
-              <Image src="/hearticon.jpg" alt="Wishlist" width={24} height={24} />
+              <IoMdHeartEmpty className="heart_icon" />
 
               {/* ⭐ Show only when logged in */}
               {isSignedIn && wishlistCount > 0 && (

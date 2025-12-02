@@ -56,13 +56,13 @@ export default function WishlistPage() {
 
   if (loading) return <p className="text-center mt-10">Loading wishlist...</p>;
   if (products.length === 0)
-    return <p className="text-center mt-10">Your wishlist is empty.</p>;
+    return <p className="text-center text-black mt-10">Your wishlist is empty.</p>;
 
   return (
     <main className="min-h-screen bg-gray-50 text-black py-10 px-6 md:px-16">
-      <h1 className="text-2xl font-bold mb-6">My Wishlist</h1>
+      <h1 className="text-2xl font-bold mb-6 ml-20">My Wishlist</h1>
 
-      <div className="space-y-4">
+      <div className="space-y-4 wishlist_div">
         {products.map((product) => (
           <div
             key={product.id}

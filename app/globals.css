@@ -187,3 +187,17 @@ select{
     transform: translateX(-50%);
   }
 }
+.wishlist_div{
+  width: 60%;
+  margin: auto;
+}
+
+.heart_icon{
+  font-size: 24px;
+  color: #0c4395;
+}
+
+.red_heart{
+  font-size: 24px;
+  color: red;
+}
