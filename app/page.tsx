@@ -26,9 +26,7 @@ export default function Home() {
   const { user } = useUser(); // Added
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Added state for modal
-  const [ratingModal, setRatingModal] = useState<boolean | null>(null);
+  const [ratingModal, setRatingModal] = useState<boolean | null>(null);  // Added state for modal
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
   useEffect(() => {

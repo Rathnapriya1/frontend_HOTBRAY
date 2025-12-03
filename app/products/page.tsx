@@ -34,6 +34,8 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [ratingModal, setRatingModal] = useState<boolean | null>(null);
+  const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -53,30 +55,77 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
+// 🟢 autosuggest while typing
   useEffect(() => {
-    let filtered = [...products];
-
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (p) =>
-          p.name.toLowerCase().includes(term) ||
-          p.part_number?.toLowerCase().includes(term)
-      );
+    if (!searchTerm.trim()) {
+      setSuggestions([]);
+      return;
     }
 
+    const delay = setTimeout(async () => {
+      try {
+        const url = `${API_BASE_URL.replace(
+          "/api",
+          ""
+        )}/search/suggest?q=${encodeURIComponent(searchTerm)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        setSuggestions(data.hits || []);
+      } catch (err) {
+        console.error("Suggest error:", err);
+      }
+    }, 250);
+
+    return () => clearTimeout(delay);
+  }, [searchTerm]);
+
+  // 🟢 Meilisearch search results
+  useEffect(() => {
+    const fetchSearch = async () => {
+      if (!searchTerm.trim()) {
+        setSearchResults([]);
+        return;
+      }
+
+      try {
+        const url = `${API_BASE_URL.replace(
+          "/api",
+          ""
+        )}/search/products?q=${encodeURIComponent(searchTerm)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        setSearchResults(data.hits || []);
+      } catch (err) {
+        console.error("Search error:", err);
+      }
+    };
+
+    fetchSearch();
+  }, [searchTerm]);
+
+  // 🟢 final reducer
+  useEffect(() => {
+    let updated = searchResults.length > 0 ? [...searchResults] : [...products];
+
     if (category) {
-      filtered = filtered.filter((p) => p.category === category);
+      updated = updated.filter((p) => p.category === category);
     }
 
     if (priceSort === "low-high") {
-      filtered.sort((a, b) => a.price - b.price);
+      updated.sort((a, b) => a.price - b.price);
     } else if (priceSort === "high-low") {
-      filtered.sort((a, b) => b.price - a.price);
+      updated.sort((a, b) => b.price - a.price);
     }
 
-    setFilteredProducts(filtered);
-  }, [searchTerm, category, priceSort, products]);
+    setFilteredProducts(updated);
+  }, [products, searchResults, category, priceSort]);
+
+  // 🔥 click outside closes suggestions
+  useEffect(() => {
+    const close = () => setSuggestions([]);
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, []);
 
   const clearFilters = () => {
     setSearchTerm("");
