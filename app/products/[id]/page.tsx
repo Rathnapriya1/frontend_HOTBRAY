@@ -153,7 +153,6 @@ export default function ProductPage() {
     <main className="min-h-screen bg-gray-50 text-black py-10 px-6 md:px-16">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
         <div className="flex flex-col md:flex-row gap-6">
-          
           {/* Left Side: Image + Buttons */}
           <div className="md:w-1/2 flex flex-col items-center">
             <Image
